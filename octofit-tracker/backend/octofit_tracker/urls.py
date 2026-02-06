@@ -31,17 +31,16 @@ router.register(r'leaderboard', views.LeaderboardViewSet)
 
 @api_view(['GET'])
 def api_root(request, format=None):
-    # Get Codespace name from environment variable
+    # Compose base_url using Codespace env variable if available, else fallback to request host (localhost/dev)
     codespace_name = os.environ.get('CODESPACE_NAME')
     if codespace_name:
         base_url = f"https://{codespace_name}-8000.app.github.dev"
     else:
-        # fallback to request host (localhost or other dev)
         scheme = request.scheme
         host = request.get_host()
         base_url = f"{scheme}://{host}"
 
-    # Compose full URLs for each endpoint
+    # Compose full URLs for each endpoint (format: https://$CODESPACE_NAME-8000.app.github.dev/api/[component]/)
     return Response({
         'users': f"{base_url}{reverse('user-list', request=request, format=format)}",
         'teams': f"{base_url}{reverse('team-list', request=request, format=format)}",
