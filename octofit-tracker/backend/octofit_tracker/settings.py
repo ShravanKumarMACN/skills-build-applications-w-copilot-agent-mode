@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-p@mj(k!bwlpxwvre7v7u00v=d%os#^@13ma(6!ff2dsj3504ug
 DEBUG = True
 
 
-# Allow localhost and Codespace URL
+
+# Allow localhost and Codespace URL (https://$CODESPACE_NAME-8000.app.github.dev)
 import os
 codespace_name = os.environ.get('CODESPACE_NAME')
 allowed_hosts = ['localhost', '127.0.0.1']
@@ -35,8 +36,8 @@ if codespace_name:
 ALLOWED_HOSTS = allowed_hosts
 
 
-# Application definition
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -84,7 +85,6 @@ WSGI_APPLICATION = 'octofit_tracker.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -93,6 +93,7 @@ DATABASES = {
         'CLIENT': {
             'host': 'localhost',
             'port': 27017,
+            # No authentication required
         },
     }
 }
@@ -140,6 +141,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ['*']
 CORS_ALLOW_METHODS = ['*']
+ALLOWED_HOSTS = ['*']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
